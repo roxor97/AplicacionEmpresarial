@@ -1,49 +1,54 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { fetchOwnerQuestions, deleteQuestion } from '../actions/questionActions'
-import { Question } from '../components/Question'
+import {
+  fetchOwnerQuestions,
+  deleteQuestion,
+} from "../actions/questionActions";
+import { Question } from "../components/Question";
 
-const OwnerQuestionsPage = ({ dispatch, loading, questions, hasErrors, redirect, userId }) => {
-    useEffect(() => {
-        dispatch(fetchOwnerQuestions(userId))
-    }, [dispatch, userId]);
+const OwnerQuestionsPage = () => {
+  const dispatch = useDispatch();
+  const question = useSelector((state) => state.question);
+  const auth = useSelector((state) => state.auth);
 
-    useEffect(() => {
-        if (redirect) {
-            dispatch(fetchOwnerQuestions(userId))
-        }
-    }, [redirect, dispatch, userId]);
+  useEffect(() => {
+    dispatch(fetchOwnerQuestions(auth.uid));
+  }, [dispatch, auth.uid]);
 
-    const onDelete = (id) => {
-        dispatch(deleteQuestion(id))
+  useEffect(() => {
+    if (question.redirect) {
+      dispatch(fetchOwnerQuestions(auth.uid));
     }
+  }, [question.redirect, dispatch, auth.uid]);
 
+  const onDelete = (id) => {
+    dispatch(deleteQuestion(id));
+  };
 
-    const renderQuestions = () => {
-        if (loading) return <p>Loading questions...</p>
-        if (hasErrors) return <p>Unable to display questions.</p>
-
-        return questions.map(question => <Question
-            key={question.id}
-            question={question}
-            excerpt onDelete={onDelete} />)
-    }
+  const renderQuestions = () => {
+    if (question.loading) return <p>Loading questions...</p>;
+    if (question.hasErrors) return <p>Unable to display questions.</p>;
 
     return (
-        <section>
-            <h1>Questions</h1>
-            {renderQuestions()}
-        </section>
-    )
-}
+      question &&
+      question.questions.map((question) => (
+        <Question
+          key={question.id}
+          question={question}
+          excerpt
+          onDelete={onDelete}
+        />
+      ))
+    );
+  };
 
-const mapStateToProps = state => ({
-    loading: state.question.loading,
-    questions: state.question.questions,
-    hasErrors: state.question.hasErrors,
-    redirect: state.question.redirect,
-    userId: state.auth.uid
-})
+  return (
+    <section>
+      <h1>Questions</h1>
+      {renderQuestions()}
+    </section>
+  );
+};
 
-export default connect(mapStateToProps)(OwnerQuestionsPage)
+export default OwnerQuestionsPage;

@@ -2,16 +2,21 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import {  fetchQuestion, postAnswer } from '../actions/questionActions'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Question } from '../components/Question'
 
-const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, userId }) => {
+const FormPage = ( {match}) => {
+    
+    const dispatch = useDispatch()
+    const question = useSelector(state => state.question)
+    const auth = useSelector(state => state.auth)
+
     const { register, handleSubmit } = useForm();
     const { id } = match.params
     const history = useHistory();
 
     const onSubmit = data => {
-        data.userId =  userId;
+        data.userId =  auth.uid;
         data.questionId = id;
         dispatch(postAnswer(data));
     };
@@ -21,16 +26,16 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
     }, [dispatch, id])
 
     useEffect(() => {
-        if (redirect) {
-            history.push(redirect);
+        if (question.redirect) {
+            history.push(question.redirect);
         }
-    }, [redirect, history])
+    }, [question.redirect, history])
 
     const renderQuestion = () => {
-        if (loading.question) return <p>Loading question...</p>
-        if (hasErrors.question) return <p>Unable to display question.</p>
+        if (question.loading.question) return <p>Loading question...</p>
+        if (question.hasErrors.question) return <p>Unable to display question.</p>
 
-        return <Question question={question} />
+        return <Question question={question.question} />
     }
 
 
@@ -44,8 +49,8 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
                     <label for="answer">Answer</label>
                     <textarea id="answer" {...register("answer", { required: true, maxLength: 300 })} />
                 </div>
-                <button type="submit" className="button" disabled={loading} >{
-                    loading ? "Saving ...." : "Save"
+                <button type="submit" className="button" disabled={question.loading} >{
+                    question.loading ? "Saving ...." : "Save"
                 }</button>
             </form>
         </section>
@@ -53,12 +58,5 @@ const FormPage = ({ dispatch, loading, redirect, match,hasErrors, question, user
     );
 }
 
-const mapStateToProps = state => ({
-    loading: state.question.loading,
-    redirect: state.question.redirect,
-    question: state.question.question,
-    hasErrors: state.question.hasErrors,
-    userId: state.auth.uid
-})
 
-export default connect(mapStateToProps)(FormPage)
+export default FormPage;

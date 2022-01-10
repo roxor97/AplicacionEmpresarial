@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,7 +12,6 @@ import "firebase/auth";
 import { login, logout } from './actions/authActions';
 
 import { PublicNavbar, PrivateNavbar } from './components/Navbar'
-import Footer from './components/Footer';
 import HomePage from './pages/HomePage'
 import SingleQuestionPage from './pages/SingleQuestionPage'
 import QuestionsPage from './pages/QuestionsPage'
@@ -19,6 +19,7 @@ import QuestionFormPage from './pages/QuestionFormPage'
 import AnswerFormPage from './pages/AnswerFormPage'
 import OwnerQuestionsPage from './pages/OwnerQuestionsPage'
 import { useAuthState } from "react-firebase-hooks/auth";
+import Footer from './components/Footer';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCTySyvuIDPg7RWF6ceuuwC2t3BEiAK38o",
@@ -31,11 +32,15 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 
-const App = ({ dispatch }) => {
+const App = () => {
   const [user] = useAuthState(auth);
-  if (user) {
-    dispatch(login(user.email, user.uid))
-  }
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(login(user?.email, user?.uid))
+  }, [user])
+
   return (
     <Router>
       {user ?
@@ -68,6 +73,7 @@ const App = ({ dispatch }) => {
       }
       <Footer />
     </Router>
+    
   )
 }
 

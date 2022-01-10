@@ -2,22 +2,26 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { postQuestion } from '../actions/questionActions'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-const FormPage = ({ dispatch, loading, redirect, userId }) => {
+const FormPage = () => {
     const { register, handleSubmit } = useForm();
     const history = useHistory();
 
+    const dispatch = useDispatch()
+    const question = useSelector(state => state.question)
+    const auth = useSelector(state => state.auth)
+
     const onSubmit = data => {
-        data.userId = userId;
+        data.userId = auth.uid;
         dispatch(postQuestion(data));
     };
 
     useEffect(() => {
-        if (redirect) {
-            history.push(redirect);
+        if (question.redirect) {
+            history.push(question.redirect);
         }
-    }, [redirect, history])
+    }, [question.redirect, history])
 
     return (
         <section>
@@ -50,8 +54,8 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
                     <label for="question">Question</label>
                     <textarea id="question" {...register("question", { required: true, maxLength: 300 })} />
                 </div>
-                <button type="submit" className="button" disabled={loading} >{
-                    loading ? "Saving ...." : "Save"
+                <button type="submit" className="button" disabled={question.loading} >{
+                    question.loading ? "Saving ...." : "Save"
                 }</button>
             </form>
         </section>
@@ -59,11 +63,5 @@ const FormPage = ({ dispatch, loading, redirect, userId }) => {
     );
 }
 
-const mapStateToProps = state => ({
-    loading: state.question.loading,
-    redirect: state.question.redirect,
-    hasErrors: state.question.hasErrors,
-    userId: state.auth.uid
-})
 
-export default connect(mapStateToProps)(FormPage)
+export default FormPage;
