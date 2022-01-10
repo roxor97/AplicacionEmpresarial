@@ -18,32 +18,16 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class FindAllByCategoryUseCase implements Function<String, Flux<QuestionDTO>> {
     private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
     private final MapperUtils mapperUtils;
 
-    public FindAllByCategoryUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    public FindAllByCategoryUseCase(MapperUtils mapperUtils, QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
         this.mapperUtils = mapperUtils;
     }
 
     public Flux<QuestionDTO> apply(String category) {
         Objects.requireNonNull(category, "Category is required");
         return questionRepository.findAllByCategory(category)
-                .map(mapperUtils.mapEntityToQuestion())
-                .flatMap(mapQuestionAggregate());
-    }
-
-    private Function<QuestionDTO, Mono<QuestionDTO>> mapQuestionAggregate() {
-        return questionDTO ->
-                Mono.just(questionDTO).zipWith(
-                        answerRepository.findAllByQuestionId(questionDTO.getId())
-                                .map(mapperUtils.mapEntityToAnswer())
-                                .collectList(),
-                        (question, answers) -> {
-                            question.setAnswers(answers);
-                            return question;
-                        }
-                );
+                .map(mapperUtils.mapEntityToQuestion());
     }
 }
