@@ -29,5 +29,4 @@ public class UpdateUseCase implements SaveQuestion {
                 .map(Question::getId);
     }
 
-
 }
