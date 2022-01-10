@@ -1,12 +1,11 @@
 package co.com.sofka.questions.model;
 
 
+import co.com.sofka.questions.utils.Category;
+import co.com.sofka.questions.utils.Type;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import ch.qos.logback.core.subst.Token.Type;
-import co.com.sofka.questions.Utils.Category;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

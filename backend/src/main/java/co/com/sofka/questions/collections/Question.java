@@ -1,10 +1,9 @@
 package co.com.sofka.questions.collections;
 
+import co.com.sofka.questions.utils.Category;
+import co.com.sofka.questions.utils.Type;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import ch.qos.logback.core.subst.Token.Type;
-import co.com.sofka.questions.Utils.Category;
 
 
 @Document
@@ -15,7 +14,6 @@ public class Question {
     private String question;
     private Type type;
     private Category category;
-
 
     public String getId() {
         return id;
@@ -56,6 +54,4 @@ public class Question {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    
 }

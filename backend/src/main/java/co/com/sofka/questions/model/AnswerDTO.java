@@ -1,13 +1,10 @@
 package co.com.sofka.questions.model;
-
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class AnswerDTO {
+    private String id;
     @NotBlank
     private String userId;
     @NotBlank
@@ -16,7 +13,7 @@ public class AnswerDTO {
     @Size(min = 15, max = 250)
     private String answer;
     private Integer position;
-
+    private List<RateDTO> rates;
 
     public AnswerDTO() {
 
@@ -28,14 +25,22 @@ public class AnswerDTO {
         this.answer = answer;
     }
 
+    public List<RateDTO> getRates() {
+        this.rates = Optional.ofNullable(rates).orElse(new ArrayList<>());
+        return rates;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Integer getPosition() {
         return Optional.ofNullable(position).orElse(1);
     }
-
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
-
 
     public String getUserId() {
         return userId;
@@ -61,17 +66,25 @@ public class AnswerDTO {
         this.answer = answer;
     }
 
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    public void setRates(List<RateDTO> rates) {
+        this.rates = rates;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AnswerDTO answerDTO = (AnswerDTO) o;
-        return Objects.equals(userId, answerDTO.userId);
+        return Objects.equals(userId, answerDTO.userId) && Objects.equals(questionId, answerDTO.questionId) && Objects.equals(answer, answerDTO.answer) && Objects.equals(position, answerDTO.position) && Objects.equals(rates, answerDTO.rates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId);
+        return Objects.hash(userId, questionId, answer, position, rates);
     }
 
     @Override
@@ -80,6 +93,8 @@ public class AnswerDTO {
                 "userId='" + userId + '\'' +
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
+                ", position=" + position +
+                ", rates=" + rates +
                 '}';
     }
 }

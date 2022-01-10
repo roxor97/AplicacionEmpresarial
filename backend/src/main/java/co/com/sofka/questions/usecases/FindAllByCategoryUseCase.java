@@ -1,18 +1,14 @@
-package co.com.sofka.questions.usecases;
-
-import java.util.Objects;
-
-import com.mongodb.Function;
-
-import org.springframework.stereotype.Service;
+package co.com.sofka.questions.useCases;
 
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.reposioties.AnswerRepository;
-import co.com.sofka.questions.reposioties.QuestionRepository;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
+import co.com.sofka.questions.repositories.QuestionRepository;
+import co.com.sofka.questions.utils.MapperUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import reactor.core.publisher.Flux;
+
+import java.util.Objects;
+import java.util.function.Function;
 
 @Service
 @Validated
