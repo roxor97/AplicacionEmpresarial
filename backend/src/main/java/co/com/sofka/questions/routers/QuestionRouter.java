@@ -68,6 +68,20 @@ public class QuestionRouter {
     }
 
 
+    @Bean
+    public RouterFunction<ServerResponse> findByCategory(FindAllByCategoryUseCase findAllByCategoryUseCase) {
+        return route(
+                GET("/findByCategory/{category}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                findAllByCategoryUseCase.apply(request.pathVariable("category")),
+                                QuestionDTO.class
+                        ))
+        );
+    }
+
+
     
 
     @Bean
