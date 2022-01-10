@@ -3,6 +3,9 @@ package co.com.sofka.questions.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import ch.qos.logback.core.subst.Token.Type;
+import co.com.sofka.questions.Utils.Category;
+
 
 @Document
 public class Question {
@@ -10,8 +13,8 @@ public class Question {
     private String id;
     private String userId;
     private String question;
-    private String type;
-    private String category;
+    private Type type;
+    private Category category;
 
 
     public String getId() {
@@ -38,19 +41,21 @@ public class Question {
         this.question = question;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
+
+    
 }
