@@ -2,17 +2,19 @@ package co.com.sofka.questions.model;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import java.util.Objects;
 import java.util.Optional;
 
 public class AnswerDTO {
-    @NotBlank(message = "Debe existir el userId para este objeto")
+    @NotBlank
     private String userId;
     @NotBlank
     private String questionId;
     @NotBlank
+    @Size(min = 15, max = 250)
     private String answer;
-
     private Integer position;
 
 
