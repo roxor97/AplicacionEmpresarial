@@ -2,6 +2,7 @@ package co.com.sofka.questions.model;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import ch.qos.logback.core.subst.Token.Type;
 import co.com.sofka.questions.Utils.Category;
@@ -17,9 +18,9 @@ public class QuestionDTO {
     private String userId;
     @NotBlank
     private String question;
-    @NotBlank
+    @NotNull
     private Type type;
-    @NotBlank
+    @NotNull
     private Category category;
     private List<AnswerDTO> answers;
 
@@ -75,8 +76,6 @@ public class QuestionDTO {
     public void setQuestion(String question) {
         this.question = question;
     }
-
-    
 
     public Type getType() {
         return type;
