@@ -1,48 +1,28 @@
-import React, { Fragment, useState } from 'react'
-import { Link } from "react-router-dom"
-import "./Navbar.css"
-import * as FaIcons from 'react-icons/fa'
-import * as AiIcons from 'react-icons/ai'
-import { IconContext } from 'react-icons'
-
+import { Fragment } from "react";
+import { Link } from "react-router-dom";
+import logo from "../media/Pregunta.png";
+import "./Navbar.css";
 const Navbar = ({ elements }) => {
-    const [sidebar, setSidebar] = useState(false);
+  return (
+    <Fragment>
+      <nav className="navbar">
+        <img className="logo" src={logo}></img>
 
-    const showSidebar = () => {
-        setSidebar(!sidebar);
-    }
+        <ul className="nav-menu">
+          {elements.map((item, index) => {
+            return (
+              <li key={index} className={item.cName}>
+                <Link to={item.url}>
+                  {item.icon}
+                  <span> {item.title}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </Fragment>
+  );
+};
 
-    return (
-        <Fragment>
-            <IconContext.Provider value={{ color: '#fff' }}>
-                <div className="navbar">
-                    <Link to="#" className='menu-bars'>
-                        <FaIcons.FaBars onClick={showSidebar} />
-                    </Link>
-                    <img className="logo" src="../media/Pregunta.png" alt=""/>
-                </div>
-                <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-                    <ul className="nav-menu-items" onClick={showSidebar}>
-                        <li className="navbar-toggle">
-                            <Link to="#" className="menu-bars">
-                                <AiIcons.AiOutlineClose />
-                            </Link>
-                        </li>
-                        {elements.map((item, index) => {
-                            return (
-                                <li key={index} className={item.cName}>
-                                    <Link to={item.url}>
-                                        {item.icon}
-                                        <span> {item.title}</span>
-                                    </Link>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </nav>
-            </IconContext.Provider>
-        </Fragment>
-    )
-}
-
-export default Navbar
+export default Navbar;

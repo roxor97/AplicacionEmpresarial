@@ -15,8 +15,8 @@ const MyQuestions = () => {
 
     const deleteModal = (id) => {
         swal({
-            title: "Estas segur@?",
-            text: "Una vez eliminada, ¡no podrá recuperar esta pregunta!",
+            title: "Estas seguro?",
+            text: "Una vez eliminada la pregunta no podras recuperarla!",
             icon: "warning",
             buttons: true,
             dangerMode: true,

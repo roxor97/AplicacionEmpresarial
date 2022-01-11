@@ -17,7 +17,7 @@ const QuestionsPagePrivate = () => {
         <Fragment>
             <div className="row">
                 <div className="col-12 text-center">
-                    <h1>Top Preguntas</h1>
+                    <h1>Algunas preguntas</h1>
                 </div>
             </div>
             <div className='col-6 offset-3'>
