@@ -3,9 +3,12 @@ package co.com.sofka.questions.utils;
 import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
 import co.com.sofka.questions.collections.Rate;
+import co.com.sofka.questions.collections.User;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.model.RateDTO;
+import co.com.sofka.questions.model.UserDTO;
+
 import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
@@ -72,6 +75,28 @@ public class MapperUtils {
             rate.setAnswerId(updateRate.getAnswerId());
             rate.setRate(updateRate.getRate());
             return rate;
+        };
+    }
+
+    public Function<User, UserDTO> mapEntityToUserDTO(){
+        return user -> new UserDTO(
+            user.getId(),
+            user.getUserId(),
+            user.getNombres(),
+            user.getApellidos(),
+            user.getCorreo()
+        );
+    }
+
+    public Function<UserDTO, User> mapperToUser() {
+        return userDTO -> {
+            User user = new User();
+            user.setId(userDTO.getId());
+            user.setUserId(userDTO.getUserId());
+            user.setNombres(userDTO.getNombres());
+            user.setApellidos(userDTO.getApellidos());
+            user.setCorreo(userDTO.getCorreo());
+            return user;
         };
     }
 }
