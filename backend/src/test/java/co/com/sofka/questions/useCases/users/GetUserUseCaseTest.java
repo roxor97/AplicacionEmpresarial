@@ -36,15 +36,15 @@ class GetUserUseCaseTest {
         user.setEmail("hperez97@example.com");
         user.setImgURL("/IMGprofile/hperez.jpg");
 
-        Mockito.when(repository.findAllByUserId(Mockito.any(String.class))).thenReturn(Mono.just(user));
+        Mockito.when(repository.findUserByUid(Mockito.any(String.class))).thenReturn(Mono.just(user));
 
-        var oneUser = useCase.apply("123");
+        var oneUser = useCase.apply("12378");
         Assertions.assertEquals(Objects.requireNonNull(oneUser.block()).getUid(), user.getUid());
     }
 
     @Test
     void getPersonSwitchIfEmptyTest(){
-        Mockito.when(repository.findAllByUserId(Mockito.any(String.class))).thenReturn(Mono.empty());
+        Mockito.when(repository.findUserByUid(Mockito.any(String.class))).thenReturn(Mono.empty());
 
         Assertions.assertThrows(ResponseStatusException.class, () -> useCase.apply("123").block());
     }

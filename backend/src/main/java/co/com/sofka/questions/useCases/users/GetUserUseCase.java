@@ -26,7 +26,7 @@ public class GetUserUseCase implements Function<String, Mono<UserDTO>> {
     @Override
     public Mono<UserDTO> apply(String uid) {
         Objects.requireNonNull(uid, "User Id is required");
-        return personRepository.findAllByUserId(uid)
+        return personRepository.findUserByUid(uid)
                 .map(mapperUtils.mapEntityToPersonDTO())
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.CONFLICT)));
     }

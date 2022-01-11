@@ -1,22 +1,38 @@
-import * as actions from '../actions/questionActions'
+import actionsTypesQuestions from "../actions/actionsTypes/ActiosTypesQuestions";
 
-export const initialState = {
-  loading: false,
-  hasErrors: false,
-  questions: [],
-  question: {},
-  redirect: null
+const initialState={
+
+    isLoading:false,
+    questions:null,
+    error:null
+
 }
 
-export default function questionsReducer(state = initialState, action) {
-  switch (action.type) {
-    case actions.LOADING:
-      return { ...state, loading: true }
-    case actions.LOADED_SUCCESS:
-      return { ...state, ...action.payload, loading: false, hasErrors: false }
-    case actions.LOADED_FAILURE:
-      return { ...state, loading: false, hasErrors: true }
-    default:
-      return state
-  }
+const QuestionsReducer = (state=initialState,{type,payload})=>{
+    switch(type){
+
+        case actionsTypesQuestions.LOADING:
+            return {
+                ...state,
+                isLoading:true,
+                error:null
+                }
+        case actionsTypesQuestions.LOAD_SUCCESS:
+            return {
+                ...state,
+                isLoading:false,
+                questions:payload,
+                error:null
+                }
+        case actionsTypesQuestions.LOAD_FAILURE:
+            return {
+                ...state,
+                isLoading:false,
+                error:payload
+                }
+
+        default: return state;
+    }
 }
+
+export default QuestionsReducer

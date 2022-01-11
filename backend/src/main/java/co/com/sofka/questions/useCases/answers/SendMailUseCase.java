@@ -17,7 +17,7 @@ public class SendMailUseCase {
 
     @Autowired
     private JavaMailSender mailSender;
-    private final String FROM = "sofkiano@gmail.com"; // K*MiUn#flKlm
+    private final String FROM = "sofkiano@gmail.com"; 
 
     public SendMailUseCase() {
     }

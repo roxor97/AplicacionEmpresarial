@@ -27,13 +27,13 @@ class CreateUseCaseTest {
     @Test
     void createUseCaseTest() {
 
-        var questionDT0 = new QuestionDTO("1453", "1234", "¿quien creo java?", Type.OPEN, Category.SCIENCES, "Mensaje Email");
+        var questionDTO = new QuestionDTO("1453", "1234", "¿quien creo java?", Type.OPEN, Category.SCIENCES, "Mensaje Email");
 
         var question = new Question("1453", "1234", "¿quien creo java?",Type.OPEN, Category.SOFTWARE_DEVELOPMENT, "Mensaje Email");
 
         when(repository.save(Mockito.any(Question.class))).thenReturn(Mono.just(question));
 
-        var result = createUseCase.apply(questionDT0);
+        var result = createUseCase.apply(questionDTO);
 
         Assertions.assertEquals(Objects.requireNonNull(result.block()),"1453");
     }

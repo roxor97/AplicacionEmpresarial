@@ -1,7 +1,6 @@
 package co.com.sofka.questions.routers;
 
 import co.com.sofka.questions.model.UserDTO;
-import co.com.sofka.questions.useCases.*;
 import co.com.sofka.questions.useCases.users.CreateUserUseCase;
 import co.com.sofka.questions.useCases.users.GetUserUseCase;
 import co.com.sofka.questions.useCases.users.UpdateUserUseCase;
@@ -23,9 +22,9 @@ import java.util.function.Function;
 public class UserRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> getPerson(GetUserUseCase useCase) {
+    public RouterFunction<ServerResponse> getUser(GetUserUseCase useCase) {
         return route(
-                GET("person/{uid}").and(accept(MediaType.APPLICATION_JSON)),
+                GET("user/{uid}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(useCase.apply(
@@ -36,27 +35,27 @@ public class UserRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> createPerson(CreateUserUseCase createUseCase) {
+    public RouterFunction<ServerResponse> createUser(CreateUserUseCase createUseCase) {
         Function<UserDTO, Mono<ServerResponse>> executor = userDTO ->  createUseCase.apply(userDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
 
         return route(
-                POST("person/create").and(accept(MediaType.APPLICATION_JSON)),
+                POST("user/create").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(UserDTO.class).flatMap(executor)
         );
     }
 
     @Bean
-    public RouterFunction<ServerResponse> updatePerson(UpdateUserUseCase useCase) {
+    public RouterFunction<ServerResponse> updateUser(UpdateUserUseCase useCase) {
         Function<UserDTO, Mono<ServerResponse>> executor = userDTO ->  useCase.apply(userDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
 
         return route(
-                PUT("person/update").and(accept(MediaType.APPLICATION_JSON)),
+                PUT("user/update").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(UserDTO.class).flatMap(executor)
         );
     }
