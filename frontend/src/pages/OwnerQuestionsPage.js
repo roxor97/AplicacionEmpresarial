@@ -5,7 +5,7 @@ import {
   fetchOwnerQuestions,
   deleteQuestion,
 } from "../actions/questionActions";
-import { Question } from "../components/Question";
+import  Question  from "../components/Question";
 
 const OwnerQuestionsPage = () => {
   const dispatch = useDispatch();

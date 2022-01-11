@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import {  fetchQuestion, postAnswer } from '../actions/questionActions'
 import { useDispatch, useSelector } from 'react-redux'
-import { Question } from '../components/Question'
+import  Question  from '../components/Question'
 
 const FormPage = ( {match}) => {
     

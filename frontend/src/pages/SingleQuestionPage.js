@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchQuestion } from "../actions/questionActions";
 
-import { Question } from "../components/Question";
-import { Answer } from "../components/Answer";
+import Question  from "../components/Question";
+import  Answer  from "../components/Answer";
 import { Link } from "react-router-dom";
 
 const SingleQuestionPage = ({ match }) => {
@@ -27,7 +27,7 @@ const SingleQuestionPage = ({ match }) => {
   const renderAnswers = () => {
     return questionState.question.answers && questionState.question.answers.length ? (
       questionState.question.answers.map((answer) => (
-        <Answer key={answer.id} answer={answer} />
+        <Answer key={answer.id} answer={answer} log={auth.uid}/>
       ))
     ) : (
       <p>Empty answer!</p>
@@ -37,7 +37,7 @@ const SingleQuestionPage = ({ match }) => {
   return (
     <section>
       {renderQuestion()}
-      {auth.userId && (
+      {auth.uid && (
         <Link to={"/answer/" + id} className="button right">
           Reply
         </Link>
