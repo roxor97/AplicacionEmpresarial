@@ -4,24 +4,25 @@ import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class UserDTO {
-
     private String id;
-    @NotBlank(message = "UserId is required")
-    private String userId;
-    private String nombres;
-    private String apellidos;
     @NotBlank
-    private String correo;
+    private String uid;
+    private String name;
+    private String lastName;
+    @NotBlank
+    private String email;
+    private String imgURL;
 
     public UserDTO() {
     }
 
-    public UserDTO(String id, String userId, String nombres, String apellidos, String correo) {
+    public UserDTO(String id, String uid, String name, String lastName, String email, String imgURL) {
         this.id = id;
-        this.userId = userId;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.correo = correo;
+        this.uid = uid;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.imgURL = imgURL;
     }
 
     public String getId() {
@@ -32,48 +33,68 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getName() {
+        return name;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserDTO that = (UserDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(nombres, that.nombres) && Objects.equals(apellidos, that.apellidos) && Objects.equals(correo, that.correo);
+        UserDTO personDTO = (UserDTO) o;
+        return Objects.equals(id, personDTO.id) && Objects.equals(uid, personDTO.uid) && Objects.equals(name, personDTO.name) && Objects.equals(lastName, personDTO.lastName) && Objects.equals(email, personDTO.email) && Objects.equals(imgURL, personDTO.imgURL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, nombres, apellidos, correo);
+        return Objects.hash(id, uid, name, lastName, email, imgURL);
+    }
+
+    @Override
+    public String toString() {
+        return "PersonDTO{" +
+                "id='" + id + '\'' +
+                ", uid='" + uid + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", imgURL=" + imgURL +
+                '}';
     }
 }

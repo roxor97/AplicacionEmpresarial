@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
+
 @Document
 public class Question {
     @Id
@@ -14,6 +15,19 @@ public class Question {
     private String question;
     private Type type;
     private Category category;
+    private String email;
+
+    public Question() {
+    }
+
+    public Question(String id, String userId, String question, Type type, Category category, String email) {
+        this.id = id;
+        this.userId = userId;
+        this.question = question;
+        this.type = type;
+        this.category = category;
+        this.email=email;
+    }
 
     public String getId() {
         return id;
@@ -53,5 +67,13 @@ public class Question {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -18,7 +18,15 @@ const FormPage = ( {match}) => {
     const onSubmit = data => {
         data.userId =  auth.uid;
         data.questionId = id;
-        dispatch(postAnswer(data));
+
+        const emailData = {
+            emailTo: question.question.ownerEmail,
+            body: `Se ha agregado una respuesta a tu pregunta \"${question.question.question}\"`
+        }
+
+        const sendEmail = question.question.ownerEmail === auth.email ? false : true;
+
+        dispatch(postAnswer(data, emailData, sendEmail));
     };
 
     useEffect(() => {

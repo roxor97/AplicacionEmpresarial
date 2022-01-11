@@ -5,15 +5,16 @@ import { postQuestion } from '../actions/questionActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const FormPage = () => {
+    
     const { register, handleSubmit } = useForm();
     const history = useHistory();
-
     const dispatch = useDispatch()
     const question = useSelector(state => state.question)
     const auth = useSelector(state => state.auth)
 
     const onSubmit = data => {
         data.userId = auth.uid;
+        data.ownerEmail=auth.email;
         dispatch(postQuestion(data));
     };
 

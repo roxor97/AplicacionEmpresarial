@@ -2,11 +2,9 @@ package co.com.sofka.questions.utils;
 
 import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
-import co.com.sofka.questions.collections.Rate;
 import co.com.sofka.questions.collections.User;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.model.RateDTO;
 import co.com.sofka.questions.model.UserDTO;
 
 import org.springframework.stereotype.Component;
@@ -26,6 +24,15 @@ public class MapperUtils {
         };
     }
 
+    public Function<Answer, AnswerDTO> mapEntityToAnswerDTO() {
+        return entity -> new AnswerDTO(
+                entity.getId(),
+                entity.getQuestionId(),
+                entity.getUserId(),
+                entity.getAnswer()
+        );
+    }
+
     public Function<QuestionDTO, Question> mapperToQuestion(String id) {
         return updateQuestion -> {
             var question = new Question();
@@ -35,68 +42,44 @@ public class MapperUtils {
             question.setQuestion(updateQuestion.getQuestion());
             question.setUserId(updateQuestion.getUserId());
             question.setType(updateQuestion.getType());
+            question.setEmail(updateQuestion.getEmail());
             return question;
         };
     }
 
-    public Function<Question, QuestionDTO> mapEntityToQuestion() {
+    public Function<Question, QuestionDTO> mapEntityToQuestionDTO() {
         return entity -> new QuestionDTO(
                 entity.getId(),
                 entity.getUserId(),
                 entity.getQuestion(),
                 entity.getType(),
-                entity.getCategory()
+                entity.getCategory(),
+                entity.getEmail()
         );
     }
 
-    public Function<Answer, AnswerDTO> mapEntityToAnswer() {
-        return entity -> new AnswerDTO(
-                entity.getId(),
-                entity.getUserId(),
-                entity.getAnswer()
-        );
-    }
-
-    public Function<Rate, RateDTO> mapEntityToRate() {
-        return entity -> new RateDTO(
-                entity.getId(),
-                entity.getUserId(),
-                entity.getAnswerId(),
-                entity.getRate()
-        );
-    }
-
-    public Function<RateDTO, Rate> mapperToRate() {
-        return updateRate -> {
-            var rate = new Rate();
-
-            rate.setId(updateRate.getId());
-            rate.setUserId(updateRate.getUserId());
-            rate.setAnswerId(updateRate.getAnswerId());
-            rate.setRate(updateRate.getRate());
-            return rate;
+    public Function<UserDTO, User> mapperToPerson(String id) {
+        return updatePerson -> {
+            var person = new User();
+            person.setId(id);
+            person.setUid(updatePerson.getUid());
+            person.setName(updatePerson.getName());
+            person.setLastName(updatePerson.getLastName());
+            person.setEmail(updatePerson.getEmail());
+            person.setImgURL(updatePerson.getImgURL());
+            return person;
         };
     }
 
-    public Function<User, UserDTO> mapEntityToUserDTO(){
-        return user -> new UserDTO(
-            user.getId(),
-            user.getUserId(),
-            user.getNombres(),
-            user.getApellidos(),
-            user.getCorreo()
+    public Function<User, UserDTO> mapEntityToPersonDTO() {
+        return entity -> new UserDTO(
+                entity.getId(),
+                entity.getUid(),
+                entity.getName(),
+                entity.getLastName(),
+                entity.getEmail(),
+                entity.getImgURL()
         );
     }
 
-    public Function<UserDTO, User> mapperToUser() {
-        return userDTO -> {
-            User user = new User();
-            user.setId(userDTO.getId());
-            user.setUserId(userDTO.getUserId());
-            user.setNombres(userDTO.getNombres());
-            user.setApellidos(userDTO.getApellidos());
-            user.setCorreo(userDTO.getCorreo());
-            return user;
-        };
-    }
 }

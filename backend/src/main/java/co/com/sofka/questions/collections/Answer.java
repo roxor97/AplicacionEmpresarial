@@ -1,9 +1,7 @@
 package co.com.sofka.questions.collections;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 @Document
 public class Answer {
@@ -13,6 +11,17 @@ public class Answer {
     private String questionId;
     private String answer;
     private Integer position;
+
+    public Answer() {
+    }
+
+    public Answer(String id, String userId, String questionId, String answer, Integer position) {
+        this.id = id;
+        this.userId = userId;
+        this.questionId = questionId;
+        this.answer = answer;
+        this.position = position;
+    }
 
     public Integer getPosition() {
         return position;

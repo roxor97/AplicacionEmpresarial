@@ -1,9 +1,14 @@
 package co.com.sofka.questions.routers;
 
-import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
-import co.com.sofka.questions.model.RateDTO;
-import co.com.sofka.questions.useCases.*;
+import co.com.sofka.questions.useCases.questions.CreateUseCase;
+import co.com.sofka.questions.useCases.questions.DeleteUseCase;
+import co.com.sofka.questions.useCases.questions.FindAllByCategoryUseCase;
+import co.com.sofka.questions.useCases.questions.GetUseCase;
+import co.com.sofka.questions.useCases.questions.ListUseCase;
+import co.com.sofka.questions.useCases.questions.OwnerListUseCase;
+import co.com.sofka.questions.useCases.questions.UpdateUseCase;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -17,61 +22,52 @@ import java.util.function.Function;
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
+
 @Configuration
 public class QuestionRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> getAll(ListUseCase listUseCase) {
-        return route(GET("/getAll"),
+    public RouterFunction<ServerResponse> getAll(ListUseCase useCase) {
+        return route(GET("questions/getAll"),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(listUseCase.get(), QuestionDTO.class))
+                        .body(BodyInserters.fromPublisher(useCase.get(), QuestionDTO.class))
         );
     }
 
     @Bean
-    public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase ownerListUseCase) {
+    public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase useCase) {
         return route(
-                GET("/getOwnerAll/{userId}"),
+                GET("questions/getOwnerAll/{userId}"),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(
-                                ownerListUseCase.apply(request.pathVariable("userId")),
+                                useCase.apply(request.pathVariable("userId")),
                                 QuestionDTO.class
                         ))
         );
     }
 
     @Bean
-    public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
-        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  createUseCase.apply(questionDTO)
+    public RouterFunction<ServerResponse> create(CreateUseCase useCase) {
+        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  useCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
 
         return route(
-                POST("/create").and(accept(MediaType.APPLICATION_JSON)),
+                POST("questions/create").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(QuestionDTO.class).flatMap(executor)
         );
     }
 
     @Bean
-    public RouterFunction<ServerResponse> deleteAnswer(DeleteAnswerUseCase deleteAnswerUseCase) {
+    public RouterFunction<ServerResponse> get(GetUseCase useCase) {
         return route(
-                DELETE("/delete/answer/{id}").and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse.accepted()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(deleteAnswerUseCase.apply(request.pathVariable("id")), Void.class))
-        );
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> get(GetUseCase getUseCase) {
-        return route(
-                GET("/get/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                GET("questions/get/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(getUseCase.apply(
+                        .body(BodyInserters.fromPublisher(useCase.apply(
                                         request.pathVariable("id")),
                                 QuestionDTO.class
                         ))
@@ -79,60 +75,35 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> addAnswer(AddAnswerUseCase addAnswerUseCase) {
-        return route(POST("/add").and(accept(MediaType.APPLICATION_JSON)),
-                request -> request.bodyToMono(AnswerDTO.class)
-                        .flatMap(addAnswerDTO -> addAnswerUseCase.apply(addAnswerDTO)
-                                .flatMap(result -> ServerResponse.ok()
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .bodyValue(result))
-                        )
-        );
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> delete(DeleteUseCase deleteUseCase) {
+    public RouterFunction<ServerResponse> delete(DeleteUseCase useCase) {
         return route(
-                DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                DELETE("questions/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.accepted()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
+                        .body(BodyInserters.fromPublisher(useCase.apply(request.pathVariable("id")), Void.class))
         );
     }
 
     @Bean
-    public RouterFunction<ServerResponse> update(UpdateUseCase updateUseCase) {
-        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  updateUseCase.apply(questionDTO)
+    public RouterFunction<ServerResponse> update(UpdateUseCase useCase) {
+        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO ->  useCase.apply(questionDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
                         .bodyValue(result));
 
         return route(
-                PUT("/update").and(accept(MediaType.APPLICATION_JSON)),
+                PUT("questions/update").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(QuestionDTO.class).flatMap(executor)
         );
     }
 
     @Bean
-    public RouterFunction<ServerResponse> findByCategory(FindAllByCategoryUseCase findAllByCategoryUseCase) {
+    public RouterFunction<ServerResponse> findByCategory(FindAllByCategoryUseCase useCase) {
         return route(
-                GET("/filterCategory/{category}").and(accept(MediaType.APPLICATION_JSON)),
+                GET("questions/category/{category}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(findAllByCategoryUseCase.apply(request.pathVariable("category")), QuestionDTO.class))
+                        .body(BodyInserters.fromPublisher(useCase.apply(request.pathVariable("category")), QuestionDTO.class))
         );
     }
-
-    @Bean
-    public RouterFunction<ServerResponse> addRate(AddRateUseCase addRateUseCase) {
-        return route(POST("/addRate").and(accept(MediaType.APPLICATION_JSON)),
-                request -> request.bodyToMono(RateDTO.class)
-                        .flatMap(addRateDTO -> addRateUseCase.apply(addRateDTO)
-                                .flatMap(result -> ServerResponse.ok()
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .bodyValue(result))
-                        )
-        );
-    }
-
 }

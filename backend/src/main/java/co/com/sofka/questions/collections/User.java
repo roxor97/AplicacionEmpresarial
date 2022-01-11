@@ -5,13 +5,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class User {
-
     @Id
     private String id;
-    private String userId;
-    private String nombres;
-    private String apellidos;
-    private String correo;
+    private String uid;
+    private String name;
+    private String lastName;
+    private String email;
+    private String imgURL;
+
+    public User() {
+    }
+
+    public User(String id, String uid, String name, String lastName, String email, String imgURL) {
+        this.id = id;
+        this.uid = uid;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.imgURL = imgURL;
+    }
 
     public String getId() {
         return id;
@@ -21,36 +33,47 @@ public class User {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getName() {
+        return name;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
+    
 }
+   
 
