@@ -1,7 +1,6 @@
 package co.com.sofka.questions.repositories;
 
 import co.com.sofka.questions.collections.Question;
-import co.com.sofka.questions.utils.Category;
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;

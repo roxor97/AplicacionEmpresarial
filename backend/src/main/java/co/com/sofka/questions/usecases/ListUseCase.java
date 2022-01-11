@@ -26,6 +26,4 @@ public class ListUseCase implements Supplier<Flux<QuestionDTO>> {
                 .map(mapperUtils.mapEntityToQuestion());
     }
 
-
-
 }

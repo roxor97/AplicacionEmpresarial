@@ -1,10 +1,9 @@
-package co.com.sofka.questions.usecases;
+package co.com.sofka.questions.useCases;
 
 import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.repositories.AnswerRepository;
 import co.com.sofka.questions.repositories.QuestionRepository;
-import co.com.sofka.questions.useCases.DeleteUseCase;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

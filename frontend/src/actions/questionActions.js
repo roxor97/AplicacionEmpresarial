@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const URL_BASE = 'http://localhost:8080';
 
 export const LOADING = 'LOADING'
@@ -89,7 +91,42 @@ export function deleteQuestion(id) {
                     }
                 }
             )
+
+            Swal.fire(
+                'Eliminado!',
+                'La pregunta ha sido eliminada!',
+                'success'
+              )
+
             dispatch(success({redirect: `/list`}));
+        } catch (error) {
+            dispatch(failure())
+        }
+    }
+}
+
+export function deleteAnswer(id, questionId) {
+    return async dispatch => {
+        dispatch(loading())
+        try {
+            await fetch(`${URL_BASE}/delete/answer/${id}`,
+                {
+                    method: 'DELETE',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+
+            Swal.fire(
+                'Eliminado',
+                'La Respuesta ha sido eliminada!',
+                'success'
+              )
+
+              dispatch(fetchQuestion(questionId));
+              dispatch(success({redirect: null}));
         } catch (error) {
             dispatch(failure())
         }

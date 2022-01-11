@@ -4,6 +4,7 @@ import co.com.sofka.questions.model.AnswerDTO;
 import co.com.sofka.questions.model.QuestionDTO;
 import co.com.sofka.questions.repositories.AnswerRepository;
 import co.com.sofka.questions.utils.MapperUtils;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
@@ -24,7 +25,7 @@ public class AddAnswerUseCase implements SaveAnswer {
     }
 
     public Mono<QuestionDTO> apply(AnswerDTO answerDTO) {
-        Objects.requireNonNull(answerDTO.getQuestionId(), "Answerid is required");
+        Objects.requireNonNull(answerDTO.getQuestionId(), "Id of the answer is required");
         return getUseCase.apply(answerDTO.getQuestionId()).flatMap(question ->
                 answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO))
                         .map(answer -> {
