@@ -174,7 +174,7 @@ export const getQuestionsByCategory = (category) => (dispatch) => {
     });
 };
 
-export const postPerson = (email, name, uid, url) => async (dispatch) => {
+export const postUser = (email, name, uid, url) => async (dispatch) => {
   const options = {
     method: "POST",
     url: `${API_URL}/user/create`,
@@ -215,7 +215,7 @@ export const getPersonValid = (user, navigate) => (dispatch) => {
     });
 };
 
-export const getPerson = (uid) => (dispatch) => {
+export const getUser = (uid) => (dispatch) => {
   dispatch(myPersonLoading());
 
   const options = {
@@ -235,7 +235,7 @@ export const getPerson = (uid) => (dispatch) => {
     });
 };
 
-export const putPerson = (person) => async (dispatch) => {
+export const putUser = (person) => async (dispatch) => {
   const options = {
     method: "PUT",
     url: `${API_URL}/user/update`,
