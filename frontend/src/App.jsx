@@ -1,21 +1,20 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PublicLayout from './layout/PublicLayout';
-import PrivateLayout from './layout/PrivateLayout';
-import HomePage from './pages/public/HomePage';
-import QuestionsPagePrivate from './pages/private/QuestionsPagePrivate';
-import OneQuestionPagePrivate from './pages/private/OneQuestionPagePrivate';
-import OneQuestionPagePublic from './pages/public/OneQuestionPagePublic';
-import CreateQuestion from './pages/private/CreateQuestion';
-import MyQuestions from './pages/private/MyQuestions';
-import Logout from './pages/private/Logout';
-import NotFound from './components/NotFound';
-import Login from './pages/public/Login';
-import Profile from './pages/private/Profile';
+import PublicLayout from "./layout/PublicLayout";
+import PrivateLayout from "./layout/PrivateLayout";
+import OneQuestionPagePrivate from "./pages/private/OneQuestionPagePrivate";
+import OneQuestionPagePublic from "./pages/public/OneQuestionPagePublic";
+import CreateQuestion from "./pages/private/CreateQuestion";
+import HomePage from "./pages/public/HomePage";
+import MyQuestions from "./pages/private/MyQuestions";
+import Logout from "./pages/private/Logout";
+import NotFound from "./components/NotFound";
+import Login from "./pages/public/Login";
+import Profile from "./pages/private/Profile";
+import QuestionsPagePrivate from "./pages/private/QuestionsPagePrivate";
 
 function App() {
-
   return (
     <div className="App">
       <BrowserRouter>

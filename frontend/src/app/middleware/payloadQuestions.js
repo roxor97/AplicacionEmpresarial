@@ -1,256 +1,209 @@
-import {
-  myQuestionsLoadSucces,
-  myQuestionsLoading,
-  myQuestionsLoadError,
-  myQuestionDelete,
-} from "../../actions/MyQuestionsActions";
-
-import {
-  questionsLoading,
-  questionsLoadSuccess,
-  questionsLoadError,
-} from "../../actions/QuestionsActions";
-import {
-  oneQuestionLoadSuccess,
-  oneQuestionLoadError,
-  oneQuestionsLoading,
-  oneQuestionsDeleteAnswer,
-} from "../../actions/OneQuestionActions";
-import {
-  myPersonLoadSuccess,
-  myPersonLoading,
-  myPersonLoadError,
-} from "../../actions/MyPersonActions";
-import axios from "axios";
+import { questionsLoading, questionsLoadSuccess, questionsLoadError } from "../../actions/QuestionsActions";
+import { myUserLoadSuccess, myUserLoading, myUserLoadError } from "../../actions/MyUserActions";
+import { oneQuestionLoadSuccess, oneQuestionLoadError, oneQuestionsLoading, oneQuestionsDeleteAnswer } from "../../actions/OneQuestionActions";
+import { myQuestionsLoadSucces, myQuestionsLoading, myQuestionsLoadError, myQuestionDelete } from "../../actions/MyQuestionsActions";
 import { loginAction } from "../../actions/AuthorActions";
+import axios from "axios";
 
-const API_URL = "https://questions-app1997.herokuapp.com";
+
+const URL = "https://questions-app1997.herokuapp.com";
 
 export const loadAllQuestion = () => (dispatch) => {
-  dispatch(questionsLoading());
+
+  dispatch(questionsLoading())
 
   const options = {
-    method: "GET",
-    url: `${API_URL}/questions/getAll`,
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    url: `${URL}/questions/getAll`,
+    headers: { 'Content-Type': 'application/json' }
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(questionsLoadSuccess(response.data));
-    })
-    .catch(function (error) {
-      dispatch(questionsLoadError(error.message));
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(questionsLoadSuccess(response.data))
+  }).catch(function (error) {
+    dispatch(questionsLoadError(error.message))
+  });
+}
+
 
 export const loadById = (id) => (dispatch) => {
-  dispatch(oneQuestionsLoading());
+
+  dispatch(oneQuestionsLoading())
 
   const options = {
-    method: "GET",
-    url: `${API_URL}/questions/get/${id}`,
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    url: `${URL}/questions/get/${id}`,
+    headers: { 'Content-Type': 'application/json' }
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(oneQuestionLoadSuccess(response.data));
-    })
-    .catch(function (error) {
-      dispatch(oneQuestionLoadError(error.message));
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(oneQuestionLoadSuccess(response.data))
+  }).catch(function (error) {
+    dispatch(oneQuestionLoadError(error.message))
+  });
+}
+
 
 export const postQuestion = (question, navigate) => {
+
   const options = {
-    method: "POST",
-    url: `${API_URL}/questions/create`,
-    headers: { "Content-Type": "application/json" },
-    data: question,
+    method: 'POST',
+    url: `${URL}/questions/create`,
+    headers: { 'Content-Type': 'application/json' },
+    data: question
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      navigate("/private/MyQuestions");
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-};
+  axios.request(options).then(function (response) {
+    navigate("/private/MyQuestions")
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
+
 
 export const postAnswer = (answer) => (dispatch) => {
   const options = {
-    method: "POST",
-    url: `${API_URL}/answer/add`,
-    headers: { "Content-Type": "application/json" },
-    data: answer,
+    method: 'POST',
+    url: `${URL}/answer/add`,
+    headers: { 'Content-Type': 'application/json' },
+    data: answer
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-      dispatch(oneQuestionLoadSuccess(response.data));
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-};
+  axios.request(options).then(function (response) {
+    console.log(response.data, 'Algo');
+    dispatch(oneQuestionLoadSuccess(response.data))
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
 
 export const deleteQuestion = (id) => (dispatch) => {
-  dispatch(myQuestionsLoading());
+  dispatch(myQuestionsLoading())
 
   const options = {
-    method: "DELETE",
-    url: `${API_URL}/questions/delete/${id}`,
+    method: 'DELETE',
+    url: `${URL}/questions/delete/${id}`
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(myQuestionDelete(id));
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(myQuestionDelete(id))
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
 
 export const deleteAnswer = (id) => (dispatch) => {
-  dispatch(oneQuestionsLoading());
+  dispatch(oneQuestionsLoading())
 
   const options = {
-    method: "DELETE",
-    url: `${API_URL}/answer/delete/${id}`,
+    method: 'DELETE',
+    url: `${URL}/answer/delete/${id}`
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(oneQuestionsDeleteAnswer(id));
-    })
-    .catch(function (error) {
-      dispatch(oneQuestionLoadError(error.message));
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(oneQuestionsDeleteAnswer(id))
+  }).catch(function (error) {
+    dispatch(oneQuestionLoadError(error.message))
+  });
+}
 
 export const getUserQuestion = (userId) => (dispatch) => {
-  dispatch(myQuestionsLoading());
+
+  dispatch(myQuestionsLoading())
 
   const options = {
-    method: "GET",
-    url: `${API_URL}/questions/getOwnerAll/${userId}`,
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    url: `${URL}/questions/getOwnerAll/${userId}`,
+    headers: { 'Content-Type': 'application/json' }
   };
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(myQuestionsLoadSucces(response.data));
-    })
-    .catch(function (error) {
-      dispatch(myQuestionsLoadError(error.message));
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(myQuestionsLoadSucces(response.data));
+  }).catch(function (error) {
+    dispatch(myQuestionsLoadError(error.message));
+  });
+}
 
 export const getQuestionsByCategory = (category) => (dispatch) => {
-  dispatch(myQuestionsLoading());
+
+  dispatch(myQuestionsLoading())
 
   const options = {
-    method: "GET",
-    url: `${API_URL}/questions/filterCategory/${category}`,
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    url: `${URL}/questions/filterCategory/${category}`,
+    headers: { 'Content-Type': 'application/json' }
   };
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(myQuestionsLoadSucces(response.data));
-    })
-    .catch(function (error) {
-      dispatch(myQuestionsLoadError(error.message));
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(myQuestionsLoadSucces(response.data));
+  }).catch(function (error) {
+    dispatch(myQuestionsLoadError(error.message));
+  });
+}
 
 export const postUser = (email, name, uid, url) => async (dispatch) => {
+
   const options = {
-    method: "POST",
-    url: `${API_URL}/user/create`,
-    headers: { "Content-Type": "application/json" },
-    data: { uid: uid, name: name, lastName: "", email: email, pictureURL: url },
+    method: 'POST',
+    url: `${URL}/user/create`,
+    headers: { 'Content-Type': 'application/json' },
+    data: { uid: uid, name: name, lastName: "", email: email, pictureURL: url }
   };
 
-  await axios
-    .request(options)
-    .then(function (response) {
-      console.log("Usuario creado");
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-};
+  await axios.request(options).then(function (response) {
+    console.log("Usuario creado");
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
 
-export const getPersonValid = (user, navigate) => (dispatch) => {
+export const getUserValid = (user, navigate) => (dispatch) => {
+
   const options = {
-    method: "GET",
-    url: `${API_URL}/user/${user.uid}`,
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    url: `${URL}/user/${user.uid}`,
+    headers: { 'Content-Type': 'application/json' },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(
-        loginAction(user.email, user.displayName, user.uid, user.photoURL)
-      );
-      navigate("/private/QuestionsPage");
-    })
-    .catch(function (error) {
-      dispatch(
-        postPerson(user.email, user.displayName, user.uid, user.photoURL)
-      );
-      navigate("/private/QuestionsPage");
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(loginAction(user.email,user.displayName,user.uid,user.photoURL));
+    navigate("/private/QuestionsPage")
+  }).catch(function (error) {
+    dispatch(postUser(user.email,user.displayName,user.uid,user.photoURL));
+    navigate("/private/QuestionsPage")
+  });
+}
 
 export const getUser = (uid) => (dispatch) => {
-  dispatch(myPersonLoading());
+  dispatch(myUserLoading())
 
   const options = {
-    method: "GET",
-    url: `${API_URL}/user/${uid}`,
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    url: `${URL}/user/${uid}`,
+    headers: { 'Content-Type': 'application/json' },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      dispatch(myPersonLoadSuccess(response.data));
-    })
-    .catch(function (error) {
-      dispatch(myPersonLoadError(error.message));
-      console.error(error);
-    });
-};
+  axios.request(options).then(function (response) {
+    dispatch(myUserLoadSuccess(response.data));
+  }).catch(function (error) {
+    dispatch(myUserLoadError(error.message));
+    console.error(error);
+  });
+}
 
-export const putUser = (person) => async (dispatch) => {
+export const putUser = (user) => async (dispatch) => {
+
   const options = {
-    method: "PUT",
-    url: `${API_URL}/user/update`,
-    headers: { "Content-Type": "application/json" },
-    data: person,
+    method: 'PUT',
+    url: `${URL}/user/update`,
+    headers: { 'Content-Type': 'application/json' },
+    data: user
   };
 
-  await axios
-    .request(options)
-    .then(function (response) {
-      dispatch(getPerson(person.uid));
-      console.log("Usuario actualizado");
-      dispatch(myPersonLoadSuccess(response.data));
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-};
+  await axios.request(options).then(function (response) {
+    dispatch(getPerson(user.uid));
+    console.log("Usuario actualizado");
+    dispatch(myUserLoadSuccess(response.data));
+  }).catch(function (error) {
+    console.error(error);
+  });
+}

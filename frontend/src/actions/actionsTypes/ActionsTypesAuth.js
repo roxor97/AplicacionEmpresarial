@@ -4,4 +4,4 @@ const actionsTypesAuth={
     LOGOUT: "LOGOUT"
 }
 
-export default actionsTypesAuth
+export default actionsTypesAuth;

@@ -1,7 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
-const AUTH = process.env;
 
 export const app = firebase.initializeApp({
   apiKey: "AIzaSyBRYsPEND-qP5rNdszyPspv810UbTARZwk",

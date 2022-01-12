@@ -13,7 +13,7 @@ export const myQuestionsLoadSucces=(questions)=>{
     }
 }
 
-export const myQuestionsDelete=(id)=>{
+export const myQuestionDelete=(id)=>{
     return {
         type:actionsTypesMyQuestion.DELETE_SUCCESS,
         payload:id

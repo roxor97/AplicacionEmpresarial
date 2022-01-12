@@ -1,7 +1,7 @@
 import ActionsTypeOneQuestion from "./actionsTypes/ActionsTypeOneQuestion";
 
 
-export const oneQuestionLoadSucces=(question)=>{
+export const oneQuestionLoadSuccess=(question)=>{
     return {
         type:ActionsTypeOneQuestion.LOAD_SUCCESS_QUESTION,
         payload:question
@@ -17,7 +17,7 @@ export const oneQuestionLoadError=(error)=>{
 
 export const oneQuestionsLoading=()=>{
     return {
-        type:ActionsTypeOneQuestion.LOADDING_QUESTION
+        type:ActionsTypeOneQuestion.LOADING_QUESTION
     }
 }
 
